@@ -1,0 +1,36 @@
+body {
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  padding: 20px;
+  background-color: #512da8;
+  color: #fff;
+}
+
+.voltar {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.conteudo {
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.conteudo img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}

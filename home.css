@@ -103,12 +103,11 @@ body {
   position: relative;
 }
 
-/* Opcional: se quiser um filtro por cima pra o texto ficar mais visível */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(81, 45, 168, 0.55); /* tom roxo semi-transparente */
+  background: rgba(81, 45, 168, 0.55); 
   z-index: 1;
 }
 
@@ -118,36 +117,64 @@ body {
   max-width: 700px;
 }
 
-
 .section {
+  position: relative;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
   text-align: center;
-  background-color: #fff;
-  transition: background 0.5s ease;
+  color: #fff;
+  padding: 0 20px;
+  overflow: hidden;
 }
 
-.section.alt {
-  background: #f3f3ff;
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(81, 45, 168, 0.55); 
+  z-index: 1;
 }
 
 .section-content {
+  position: relative;
+  z-index: 2;
   max-width: 700px;
 }
 
-.section-content h2 {
-  font-size: 2rem;
-  color: #512da8;
-  margin-bottom: 10px;
+#biblia {
+  background: url(img/download\ \(5\).jfif) center/cover no-repeat;
 }
 
-.section-content p {
-  font-size: 1rem;
-  color: #444;
+#personagens {
+  background: url(img/download\ \(6\).jfif) center/cover no-repeat;
 }
+
+#planos {
+  background: url(img/download\ \(7\).jfif) center/cover no-repeat;
+}
+
+#devocional {
+  background: url(img/Hands\ composition\ with\ hand\ drawn\ style\ _\ Premium\ Vector.jfif) center/cover no-repeat;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #512da8;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #5c6bc0;
+} 
+
 
 .icon {
   font-size: 50px;
@@ -178,6 +205,79 @@ body {
     transform: translateY(0);
   }
 }
+
+.personagens-section {
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  color: #333;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.personagens-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #512da8;
+}
+
+.personagens-section p {
+  font-size: 1rem;
+  margin-bottom: 40px;
+  color: #555;
+}
+
+.personagens-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.personagem-card {
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  max-width: 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.personagem-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.personagem-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.personagem-card h3 {
+  color: #512da8;
+  margin-bottom: 5px;
+}
+
+.personagem-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.personagem-card .btn {
+  display: inline-block;
+  background-color: #512da8;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.personagem-card .btn:hover {
+  background-color: #5c6bc0;
+}
+
 
 footer {
   background: #512da8;
