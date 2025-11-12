@@ -1,21 +1,21 @@
-from bottle import Bottle, run, template, static_file
-import os
+from bottle import Bottle, run, static_file
 
 app = Bottle()
 
-# Caminho absoluto da pasta views
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-VIEWS_DIR = os.path.join(BASE_DIR, 'views')
-
+# Página inicial (login e cadastro)
 @app.route('/')
+def index():
+    return static_file('index.html', root='./views')
+
+# Página principal (home)
+@app.route('/home')
 def home():
-    return template('index', template_lookup=[VIEWS_DIR])
+    return static_file('home.html', root='./views')
 
-# Rota para arquivos estáticos (CSS, JS, imagens, etc)
-@app.route('/static/<filepath:path>')
+# Servir arquivos estáticos (CSS, JS, imagens, etc)
+@app.route('/<filepath:path>')
 def server_static(filepath):
-    return static_file(filepath, root=VIEWS_DIR)
+    return static_file(filepath, root='./views')
 
-# Inicia o servidor
 if __name__ == '__main__':
     run(app, host='localhost', port=8080, debug=True, reloader=True)
