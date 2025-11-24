@@ -1,2 +1,2 @@
-from .database import *
-from models import user
+from database import *
+from models.user import User
