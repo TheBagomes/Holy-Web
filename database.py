@@ -3,7 +3,7 @@ import sqlite3
 DATABASE_NAME = "holyweb.db"
 
 def criar_conexao():
-    return sqlite3.connect(DATABASE_NAME)
+    return sqlite3.connect(DATABASE_NAME, timeout=5)
 
 def criar_tabelas():
     con = criar_conexao()

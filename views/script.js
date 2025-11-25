@@ -9,10 +9,3 @@ registerBtn.addEventListener('click', () => {
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
 });
-
-const formLoginBtn = document.querySelector('.sign-in form button');
-
-formLoginBtn.addEventListener('click', (e) => {
-    e.preventDefault(); 
-    window.location.href = 'home.html'; 
-});
