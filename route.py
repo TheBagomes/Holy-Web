@@ -71,7 +71,7 @@ def logout():
 def listar_usuarios():
     proteger()
     usuarios = User.get_all()
-    return template('users_list', usuarios=usuarios)
+    return redirect('/')
 
 
 # CADASTRAR
@@ -81,7 +81,7 @@ def register():
     email = request.forms.get('email')
     senha = request.forms.get('senha')
 
-    novo = User(None, nome, email, senha)
+    novo = User(None, nome=nome, email=email, senha=senha)
     novo.save()
 
     return redirect('/users')
