@@ -1,8 +1,13 @@
 from bottle import Bottle, run, static_file, request, redirect, template, response
 from models.user import User
 from database import criar_tabelas
+from bottle.ext.websocket import GeventWebSocketServer, websocket
+import json
 
 app = Bottle()
+
+# Lista de conexões WebSocket ativas
+clients = set()
 
 criar_tabelas()
 
@@ -26,11 +31,8 @@ def login():
     if not user or user.senha != senha:
         return template("login_error", msg="Email ou senha incorretos")
 
-    # salva sessão
     response.set_cookie("user_id", str(user.id), secret="CHAVE_SECRETA")
-
     return redirect('/home')
-
 
 # ------------------------------------------
 # PROTEGER ROTAS
@@ -38,11 +40,9 @@ def login():
 def usuario_logado():
     return request.get_cookie("user_id", secret="CHAVE_SECRETA")
 
-
 def proteger():
     if not usuario_logado():
         redirect('/')
-
 
 # ------------------------------------------
 # HOME (somente logado)
@@ -52,7 +52,6 @@ def home():
     proteger()
     return template("home")
 
-
 # ------------------------------------------
 # LOGOUT
 # ------------------------------------------
@@ -61,20 +60,10 @@ def logout():
     response.delete_cookie("user_id")
     return redirect('/')
 
-
 # ------------------------------------------
-# CRUD COMPLETO
+# CRUD
 # ------------------------------------------
 
-# LISTAR
-@app.get('/users')
-def listar_usuarios():
-    proteger()
-    usuarios = User.get_all()
-    return redirect('/')
-
-
-# CADASTRAR
 @app.post('/register')
 def register():
     nome = request.forms.get('nome')
@@ -84,37 +73,51 @@ def register():
     novo = User(None, nome=nome, email=email, senha=senha)
     novo.save()
 
-    return redirect('/users')
+    return redirect('/')
 
+# ------------------------------------------
+# WEBSOCKET DO CHAT
+# ------------------------------------------
+@app.route('/ws', apply=[websocket])
+def websocket_handler(ws):
 
-# EDITAR (form)
-@app.get('/users/edit/<id:int>')
-def edit_user_form(id):
-    proteger()
-    user = User.get(id)
-    return template('user_edit', user=user)
+    # pegar usuário pelo cookie
+    user_id = request.get_cookie("user_id", secret="CHAVE_SECRETA")
+    user = User.get(user_id)
 
+    if not user:
+        ws.close()
+        return
 
-# EDITAR (salvar)
-@app.post('/users/edit/<id:int>')
-def edit_user(id):
-    nome = request.forms.get('nome')
-    email = request.forms.get('email')
-    senha = request.forms.get('senha')
+    clients.add(ws)
+    print(f"Cliente conectado: {user.nome}")
 
-    user = User(id, nome, email, senha)
-    user.update()
+    try:
+        while True:
+            msg = ws.receive()
+            if msg is None:
+                break
 
-    return redirect('/users')
+            data = json.loads(msg)
 
+            # mensagem final a ser enviada
+            mensagem_formatada = {
+                "username": user.nome,
+                "message": data["message"],
+                "time": data["time"]
+            }
 
-# DELETAR
-@app.get('/users/delete/<id:int>')
-def delete_user(id):
-    proteger()
-    User.delete(id)
-    return redirect('/users')
+            # enviar para todos
+            for client in list(clients):
+                try:
+                    mensagem_formatada["isMine"] = (client == ws)
+                    client.send(json.dumps(mensagem_formatada))
+                except:
+                    clients.remove(client)
 
+    finally:
+        clients.remove(ws)
+        print(f"{user.nome} desconectou")
 
 # ------------------------------------------
 # ARQUIVOS ESTÁTICOS
@@ -123,9 +126,9 @@ def delete_user(id):
 def server_static(filepath):
     return static_file(filepath, root='./views')
 
-
 # ------------------------------------------
 # RUN
 # ------------------------------------------
 if __name__ == '__main__':
-    run(app, host='localhost', port=8080, debug=True, reloader=True)
+    run(app, host='localhost', port=8080,
+        server=GeventWebSocketServer, debug=True, reloader=True)

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HolyWeb - Chat</title>
+
+  <!-- Ícones -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+
+  <header class="chat-header">
+    <div class="chat-head-left">
+      <i class="fa-solid fa-comments"></i>
+      <span class="chat-title">Chat da HolyWeb</span>
+    </div>
+
+    <div class="chat-head-right">
+      <a href="home.html" class="logout_chat" title="Voltar"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
+  </header>
+
+  <main id="chat-box" class="chat-box" aria-live="polite" role="log">
+
+  </main>
+
+
+  <footer class="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Digite sua mensagem..." autocomplete="off" />
+    <button id="btn-chat" aria-label="Enviar"><i class="fa-solid fa-paper-plane"></i></button>
+  </footer>
+
+  <script src="chat.js"></script>
+</body>
+</html>

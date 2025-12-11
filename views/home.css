@@ -286,3 +286,75 @@ footer {
   padding: 20px 0;
   font-size: 14px;
 }
+
+/* ==============================
+   CHAT ESTILO WHATSAPP/DISCORD
+   ============================== */
+
+.chat-box {
+  width: 100%;
+  max-width: 600px;
+  height: 380px;
+  background: #ffffffcc;
+  border: 2px solid #512da8;
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  margin: 20px auto;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* bolhas de mensagem */
+.msg {
+  padding: 10px 14px;
+  max-width: 75%;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  display: inline-block;
+  word-wrap: break-word;
+}
+
+.msg-user {
+  align-self: flex-end;
+  background: #5c6bc0;
+  color: white;
+  border-bottom-right-radius: 0;
+}
+
+.msg-server {
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-bottom-left-radius: 0;
+  color: #222;
+}
+
+.chat-input-area {
+  margin: 0 auto;
+  margin-top: 10px;
+  max-width: 600px;
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input-area input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #888;
+  font-size: 15px;
+}
+
+.chat-input-area button {
+  padding: 12px 18px;
+  background: #512da8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
